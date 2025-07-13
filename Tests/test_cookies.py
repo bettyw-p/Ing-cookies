@@ -22,3 +22,9 @@ def test_accept_cookies(page: Page):
 
     expect(page).to_have_title(cookie_banner.page_title)
     expect(cookie_banner.accept_selected).to_be_hidden()
+
+    cookies = page.context.cookies()
+    cookie_dict = {cookie['name']: cookie['value'] for cookie in cookies}
+    expected_value = '3'
+    actual_value = cookie_dict.get('cookiePolicyGDPR')
+    assert actual_value == expected_value
