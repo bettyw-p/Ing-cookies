@@ -7,11 +7,6 @@ def test_accept_cookies(page: Page):
     page.goto(BASE_URL)
     cookie_banner.customize_button.click()
 
-    categories = {
-    "analytical": '[name="CpmAnalyticalOption"]',
-    "marketing": '[name="CpmMarketingOption"]'
-    }
-
     state = cookie_banner.get_toggle_state(cookie_banner.analytical_toggle)
 
     if state == "false":
@@ -22,11 +17,6 @@ def test_accept_cookies(page: Page):
     state = cookie_banner.get_toggle_state(cookie_banner.analytical_toggle)
 
     expect(cookie_banner.analytical_toggle).to_be_checked()
-
-    for name, selector in categories.items():
-        toggle = page.locator(selector)
-        state = toggle.get_attribute("aria-checked")
-        print(f"{name.capitalize()} cookies: {'Enabled' if state == 'true' else 'Disabled'}")
 
     cookie_banner.accept_selected.click()
 
