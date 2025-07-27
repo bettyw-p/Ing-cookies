@@ -3,7 +3,6 @@ from playwright.sync_api import Page
 class CookieBanner:
     def __init__(self, page: Page):
         self.page = page
-        self.page_title = "ING Bank Śląski"
         self.customize_button = page.locator("//button[contains(text(), 'Dostosuj')]")
         self.accept_selected = page.locator("//button[contains(text(), 'Zaakceptuj zaznaczone')]")
         self.dismiss_all = page.locator("//button[contains(@class,'js-cookie-policy-main-decline-button')]")
