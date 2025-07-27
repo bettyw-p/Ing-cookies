@@ -7,10 +7,8 @@ class CookieBanner:
         self.customize_button = page.locator("//button[contains(text(), 'Dostosuj')]")
         self.accept_selected = page.locator("//button[contains(text(), 'Zaakceptuj zaznaczone')]")
         self.dismiss_all = page.locator("//button[contains(@class,'js-cookie-policy-main-decline-button')]")
+        self.accept_all = page.locator("//button[contains(text(), 'Zaakceptuj wszystkie')]")
         self.analytical_toggle = page.locator('[role="switch"][name="CpmAnalyticalOption"]')
-
-    def get_toggle_state(self, toggle_type):
-        return toggle_type.get_attribute("aria-checked")
     
     def check_accepted_cookies(self, page: Page, expected_value):
         cookies = page.context.cookies()

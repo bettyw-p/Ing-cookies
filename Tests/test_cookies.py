@@ -7,8 +7,11 @@ from config import BASE_URL
 def go_to_base_url(page):
     page.goto(BASE_URL)
 
-def test_accept_cookies(page: Page):
-    cookie_banner = CookieBanner(page)
+@pytest.fixture
+def cookie_banner(page: Page) -> CookieBanner:
+    return CookieBanner(page)
+
+def test_accept_analytics_cookies(page: Page, cookie_banner: CookieBanner):
     cookie_banner.customize_button.click()
     cookie_banner.analytical_toggle.click()
     expect(cookie_banner.analytical_toggle).to_be_checked()
@@ -19,11 +22,18 @@ def test_accept_cookies(page: Page):
 
     cookie_banner.check_accepted_cookies(page, "3")
 
-def test_dismiss_cookies(page: Page):
-    cookie_banner = CookieBanner(page)
+def test_dismiss_cookies(page: Page, cookie_banner: CookieBanner):
     cookie_banner.dismiss_all.click()
 
     expect(page).to_have_title(cookie_banner.page_title)
     expect(cookie_banner.dismiss_all).to_be_hidden()
 
     cookie_banner.check_accepted_cookies(page, "1")
+
+def test_accept_all_cookies(page: Page, cookie_banner: CookieBanner):
+    cookie_banner.accept_all.click()
+
+    expect(page).to_have_title(cookie_banner.page_title)
+    expect(cookie_banner.accept_all).to_be_hidden()
+
+    cookie_banner.check_accepted_cookies(page, "4")
